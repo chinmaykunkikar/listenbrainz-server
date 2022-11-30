@@ -150,14 +150,7 @@ export default function FreshReleases({ newAlert }: FreshReleasesProps) {
                 setFilteredList={setFilteredList}
               />
             </div>
-            <div
-              id="release-cards-grid"
-              className={
-                pageType === PAGE_TYPE_SITEWIDE
-                  ? "col-xs-12 col-md-10"
-                  : "col-xs-12 col-md-11"
-              }
-            >
+            <div id="release-cards-grid" className="col-xs-12 col-md-10">
               {filteredList?.map((release) => {
                 return (
                   <ReleaseCard
@@ -174,14 +167,11 @@ export default function FreshReleases({ newAlert }: FreshReleasesProps) {
                 );
               })}
             </div>
-
-            {pageType === PAGE_TYPE_SITEWIDE ? (
-              <div className="releases-timeline col-xs-12 col-md-1">
-                {releases.length > 0 ? (
-                  <ReleaseTimeline releases={filteredList} />
-                ) : null}
-              </div>
-            ) : null}
+            <div className="releases-timeline col-xs-12 col-md-1">
+              {releases.length > 0 ? (
+                <ReleaseTimeline releases={filteredList} />
+              ) : null}
+            </div>
           </>
         )}
       </div>

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
-import { uniqBy } from "lodash";
+import { sortBy, uniqBy } from "lodash";
 import Spinner from "react-loader-spinner";
 import { withAlertNotifications } from "../notifications/AlertNotificationsHOC";
 import APIServiceClass from "../utils/APIService";
@@ -53,7 +53,7 @@ export default function FreshReleases({ newAlert }: FreshReleasesProps) {
         freshReleases = userFreshReleases.payload.releases;
       }
 
-      const cleanReleases = uniqBy(freshReleases, (datum) => {
+      let cleanReleases = uniqBy(freshReleases, (datum) => {
         return (
           /*
            * toLowerCase() solves an edge case.
@@ -66,6 +66,10 @@ export default function FreshReleases({ newAlert }: FreshReleasesProps) {
           datum.artist_credit_name.toLowerCase()
         );
       });
+
+      // Always sort releases by date
+      cleanReleases = sortBy(cleanReleases, ["release_date"]);
+
       const releaseTypes = cleanReleases
         .map(
           (release) =>
